@@ -1,0 +1,183 @@
+pipeline {
+    agent any
+pipeline {
+    
+    stages {
+        stage('Test') {
+            
+            agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+
+
+    stages {
+        stage('clean') {
+            steps {
+                sh '''
+                mvn clean
+
+                '''
+            }
+        }
+pipeline {
+    
+    stages {
+        stage('Test') {
+            
+            agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+
+    stage('validate') {
+            steps {
+                sh '''
+             mvm validate   
+                
+                '''
+            }
+        }
+
+    pipeline {
+    
+    stages {
+        stage('Test') {
+            
+            agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+
+    
+    stage('compile') {
+            steps {
+               sh '''
+             mvm compile 
+
+               '''
+            }
+        }
+    
+    pipeline {
+    
+    stages {
+        stage('Test') {
+            
+            agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+
+    
+    
+    stage('test') {
+            steps {
+                sh '''
+               mvm test
+                '''
+            }
+        }
+    pipeline {
+    
+    stages {
+        stage('Test') {
+            
+            agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+
+     stage('package') {
+            steps {
+               sh '''
+              mvm package
+
+               '''
+            }
+        }
+    pipeline {
+    
+    stages {
+        stage('Test') {
+            
+            agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+
+     stage('verify') {
+            steps {
+               sh '''
+              mvm verify
+
+               '''
+            }
+        }
+pipeline {
+    
+    stages {
+        stage('Test') {
+            
+            agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+    
+ stage('install') {
+            steps {
+               sh '''
+            mvm install  
+
+               '''
+            }
+        }
+    
+
+
+     
+    
+    
+    
+    
+    
+    }
+
+
+}
+
