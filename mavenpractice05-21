@@ -1,183 +1,96 @@
 pipeline {
     agent any
-pipeline {
-    
-    stages {
-        stage('Test') {
-            
-            agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
-
 
     stages {
+
         stage('clean') {
-            steps {
-                sh '''
-                mvn clean
-
-                '''
-            }
-        }
-pipeline {
-    
-    stages {
-        stage('Test') {
-            
             agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-    stage('validate') {
-            steps {
-                sh '''
-             mvm validate   
-                
-                '''
-            }
-        }
-
-    pipeline {
-    
-    stages {
-        stage('Test') {
-            
-            agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
-
-    
-    stage('compile') {
             steps {
                sh '''
-             mvm compile 
-
+              mvn clean
                '''
             }
         }
-    
-    pipeline {
-    
-    stages {
-        stage('Test') {
-            
-            agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
 
-    
-    
-    stage('test') {
-            steps {
-                sh '''
-               mvm test
-                '''
-            }
-        }
-    pipeline {
-    
-    stages {
-        stage('Test') {
-            
+        stage('compile') {
             agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-     stage('package') {
             steps {
                sh '''
-              mvm package
-
+             mvn compile
                '''
             }
         }
-    pipeline {
-    
-    stages {
-        stage('Test') {
-            
-            agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
 
-     stage('verify') {
+stage('validate') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
             steps {
                sh '''
-              mvm verify
-
+               mvn validate
                '''
             }
         }
-pipeline {
-    
-    stages {
-        stage('Test') {
-            
-            agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
-    
- stage('install') {
+
+
+
+stage('test') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
             steps {
                sh '''
-            mvm install  
-
+             mvn test 
                '''
             }
         }
-    
+
+stage('package') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+              mvn package
+               '''
+            }
+        }
+
+stage('verify') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+              mvn verify
+               '''
+            }
+        }
 
 
-     
-    
-    
-    
-    
-    
+stage('install') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+           mvn install
+               '''
+            }
+        }
+       
+
+
     }
-
-
 }
-
